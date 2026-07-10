@@ -48,6 +48,10 @@ dependencies {
     // Registrar ciclo de vida de consult
     implementation("io.smallrye.reactive:smallrye-mutiny-vertx-consul-client")
 
+    implementation("io.quarkus:quarkus-smallrye-stork")
+    implementation("io.smallrye.stork:stork-service-discovery-consul")
+    implementation("io.quarkus:quarkus-jackson")
+
 }
 
 group = "org.acme"
