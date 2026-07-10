@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/app-cliente/src/main/resources/db/migration/V2__creacion_prestamos_clientes.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/app-cliente/src/main/resources/db/migration/V3__insersiónDatos.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/app-productos/src/main/resources/db/migration/V1__Creacion_de_tablas_y_datos.sql" dialect="GenericSQL" />
+  </component>
+</project>

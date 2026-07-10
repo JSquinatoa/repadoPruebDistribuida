@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Clientes y Facturas</title>
+    <!-- Incluir Vue 3 desde CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9;}
+        h1, h2 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; background: white;}
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Panel de Administración (Vue 3)</h1>
+        
+        <h2>Lista de Clientes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Dirección</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="cliente in clientes" :key="cliente.id">
+                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.apellido }}</td>
+                    <td>{{ cliente.direccion }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Lista de Facturas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Factura</th>
+                    <th>ID Cliente</th>
+                    <th>ID Producto</th>
+                    <th>Precio de Venta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="factura in facturas" :key="factura.id">
+                    <td>{{ factura.id }}</td>
+                    <td>{{ factura.cliente_id }}</td>
+                    <td>{{ factura.producto_id }}</td>
+                    <td>${{ factura.precio }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const clientes = ref([]);
+                const facturas = ref([]);
+
+                // Llamadas a nuestros propios endpoints REST
+                const cargarDatos = async () => {
+                    try {
+                        const resClientes = await fetch('http://localhost:8070/clientes');
+                        clientes.value = await resClientes.json();
+
+                        const resFacturas = await fetch('http://localhost:8070/facturas');
+                        facturas.value = await resFacturas.json();
+                    } catch (error) {
+                        console.error('Error cargando los datos:', error);
+                    }
+                };
+
+                // Cuando la página carga, ejecutamos cargarDatos()
+                onMounted(() => {
+                    cargarDatos();
+                });
+
+                return {
+                    clientes,
+                    facturas
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
